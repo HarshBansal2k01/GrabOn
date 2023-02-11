@@ -57,12 +57,12 @@ const Cart = ({ history =[] }) => {
                 <div className="cartContainer">
                   <CartItemCard
                     item={item}
-                    deleteCartItems={removeItemsFromCart}
+                    deleteCartItems={deleteCartItems}
                   />
                   <div className="cartInput">
                     <button
                       onClick={() =>
-                        increaseQuantity(
+                        decreaseQuantity(
                           item.product,
                           item.quantity,
                           item.stock
@@ -74,7 +74,7 @@ const Cart = ({ history =[] }) => {
                     <input type="number" value={item.quantity} readOnly />
                     <button
                       onClick={() =>
-                        decreaseQuantity(
+                        increaseQuantity(
                           item.product,
                           item.quantity,
                           item.stock

@@ -3,47 +3,52 @@ import Carousel from "react-material-ui-carousel";
 import "./ProductDetails.css";
 
 import { useSelector, useDispatch } from "react-redux";
-import { clearErrors, getProductDetails } from "../../actions/productAction";
-import ReactStars from "react-rating-stars-component";
+import {
+  clearErrors,
+  getProductDetails,
+  newReview
+} from "../../actions/productAction";
 import ReviewCard from "./ReviewCard.js";
 import Loader from "../layout/loader/Loader";
 import { useParams } from "react-router-dom";
 import { useAlert } from "react-alert";
 import MetaData from "../layout/MetaData";
 import { addItemsToCart } from "../../actions/cartAction";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button
+} from "@mui/material";
+
+import { Rating } from "@material-ui/lab";
+import { NEW_REVIEW_RESET } from "../../constant/productConstants";
+
 // match = req.params.id to fetch data
 const ProductDetails = ({ match }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
 
   const { product, loading, error } = useSelector(
-    (state) => state.productDetails
+    state => state.productDetails
   );
-  // we are using hooks useParams instead of match.params.id
-  const { id } = useParams();
-  useEffect(() => {
-    if (error) {
-      alert.error(error);
-      // will clearing error after showing
-      dispatch(clearErrors());
-    }
-
-    dispatch(getProductDetails(id));
-  }, [dispatch, id, error, alert]);
+  const { success, error: reviewError } = useSelector(state => state.newReview);
 
   const options = {
-    // stars are not selected cause of edit:false
-    edit: false,
-    color: "rgba(20,20,20,0.1)",
-    activeColor: "tomato",
-    size: window.innerWidth < 600 ? 20 : 25,
+    size: "large",
     // stars
     value: product.ratings,
-    // for proper half star
-    isHalf: true,
+    // meaning we can't edit it
+    readOnly: true,
+    // for half star
+    precision:0.5
   };
 
   const [quantity, setQuantity] = useState(1);
+  const [open, setOpen] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
 
   const increaseQuantity = () => {
     // if we increament the quantity but stock is less then
@@ -66,6 +71,43 @@ const ProductDetails = ({ match }) => {
     dispatch(addItemsToCart(id, quantity));
     alert.success("Item Added To Cart");
   };
+  const submitReviewToggle = () => {
+    open ? setOpen(false) : setOpen(true);
+  };
+
+  const reviewSubmitHandler = () => {
+    const myForm = new FormData();
+
+    myForm.set("rating", rating);
+    myForm.set("comment", comment);
+    myForm.set("productId", match.params.id);
+
+    dispatch(newReview(myForm));
+
+    setOpen(false);
+  };
+
+  // we are using hooks useParams instead of match.params.id
+  const { id } = useParams();
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      // will clearing error after showing
+      dispatch(clearErrors());
+    }
+
+    if (reviewError) {
+      alert.error(reviewError);
+      dispatch(clearErrors());
+    }
+
+    if (success) {
+      alert.success("Review Submitted Successfully");
+      dispatch({ type: NEW_REVIEW_RESET });
+    }
+
+    dispatch(getProductDetails(id));
+  }, [dispatch, id, error, alert, reviewError, success]);
 
   return (
     <Fragment>
@@ -94,7 +136,7 @@ const ProductDetails = ({ match }) => {
                 <p>Product # {product._id}</p>
               </div>
               <div className="detailsBlock-2">
-                <ReactStars {...options} />
+                <Rating {...options} />
                 <span className="detailsBlock-2-span">
                   {" "}
                   ({product.numOfReviews} Reviews)
@@ -128,14 +170,46 @@ const ProductDetails = ({ match }) => {
                 Description : <p>{product.description}</p>
               </div>
 
-              <button className="submitReview">Submit Review</button>
+              <button onClick={submitReviewToggle} className="submitReview">
+                Submit Review
+              </button>
             </div>
           </div>
           <h3 className="reviewsHeading">REVIEWS</h3>
+
+          <Dialog
+            aria-labelledby="simple-dialog-title"
+            open={open}
+            onClose={submitReviewToggle}
+          >
+            <DialogTitle>Submit Review</DialogTitle>
+            <DialogContent className="submitDialog">
+              <Rating
+                onChange={e => setRating(e.target.value)}
+                value={rating}
+                size="large"
+              />
+              <textarea
+                className="submitDialogTextArea"
+                cols="30"
+                rows="5"
+                value={comment}
+                onChange={e => setComment(e.target.value)}
+              ></textarea>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={submitReviewToggle} color="secondary">
+                Cancel
+              </Button>
+              <Button onClick={reviewSubmitHandler} color="primary">
+                Submit
+              </Button>
+            </DialogActions>
+          </Dialog>
           {product.reviews && product.reviews[0] ? (
             <div className="reviews">
               {product.reviews &&
-                product.reviews.map((review) => (
+                product.reviews.map(review => (
                   <ReviewCard key={review._id} review={review} />
                 ))}
             </div>

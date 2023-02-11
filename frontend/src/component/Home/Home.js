@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 // import { CgMouse } from "react-icons/fa";
 import "./Home.css";
-import Product from "./ProductCard.js";
+import ProductCard from "./ProductCard.js";
 import MetaData from "../layout/MetaData";
 import { clearErrors,getProduct } from "../../actions/productAction";
 // to call and use function we need this 2 things 4
@@ -49,7 +49,7 @@ const Home = () => {
           {/* showing products */}
           <div className="container" id="container">
             {products &&
-              products.map((product) => <Product product={product} />)}
+              products.map((product) => <ProductCard key ={product._id} product = {product} />)}
           </div>
         </Fragment>
       )}
