@@ -29,7 +29,15 @@ import { loadStripe } from "@stripe/stripe-js";
 import OrderSuccess from "./component/Cart/OrderSuccess.js";
 import MyOrders from "./component/Order/MyOrders";
 import OrderDetails from "./component/Order/OrderDetails.js";
-
+import Dashboard from "./component/admin/Dashboard.js";
+import ProductList from "./component/admin/ProductList.js"
+import NewProduct from "./component/admin/NewProduct"
+import UpdateProduct from "./component/admin/UpdateProduct"
+import OrderList from "./component/admin/OrderList"
+import ProcessOrder from "./component/admin/ProcessOrder"
+import UsersList from "./component/admin/UsersList";
+import UpdateUser from "./component/admin/UpdateUser";
+import ProductReviews from "./component/admin/ProductReviews";
 function App() {
   const { isAuthenticated, user } = useSelector(state => state.user);
 
@@ -83,6 +91,61 @@ function App() {
 
         <Route exact path="/order/:id" element={<OrderDetails />} />
       </Routes>
+
+      <Route
+        isAdmin={true}
+        exact
+        path="/admin/dashboard"
+        element={<Dashboard />}
+      />
+      <Route
+        isAdmin={true}
+        exact
+        path="/admin/products"
+        element={<ProductList />}
+      />
+      <Route
+        isAdmin={true}
+        exact
+        path="/admin/product"
+        element={<NewProduct />}
+      />
+      <Route
+        isAdmin={true}
+        exact
+        path="/admin/product/:id"
+        element={<UpdateProduct />}
+      />
+      <Route
+        isAdmin={true}
+        exact
+        path="/admin/orders"
+        element={<OrderList />}
+      />
+      <Route
+        isAdmin={true}
+        exact
+        path="/admin/order/:id"
+        element={<ProcessOrder />}
+      />
+      <Route
+        isAdmin={true}
+        exact
+        path="/admin/users"
+        element={<UsersList />}
+      />
+      <Route
+        isAdmin={true}
+        exact
+        path="/admin/user/:id"
+        element={<UpdateUser />}
+      />
+      <Route
+        isAdmin={true}
+        exact
+        path="/admin/reviews"
+        element={<ProductReviews />}
+      />
 
       {/* not protected below */}
       <Route exact path="/password/forgot" element={<ForgotPassword />} />

@@ -2,25 +2,31 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import {
+  productsReducer,
   productReducer,
   productDetailsReducer,
-  newReviewReducer
+  newReviewReducer,
+  newProductReducer
 } from "./reducers/productReducer";
 
 import {
+  allUsersReducer,
   forgotPasswordReducer,
   profileReducer,
+  userDetailsReducer,
   userReducer
 } from "./reducers/userReducer";
 import { cartReducer } from "./reducers/cartReducer";
 import {
+  allOrdersReducer,
   myOrdersReducer,
   newOrderReducer,
-  orderDetailsReducer
+  orderDetailsReducer,
+  orderReducer
 } from "./reducers/orderReducer";
 
 const reducer = combineReducers({
-  products: productReducer,
+  products: productsReducer,
   productDetails: productDetailsReducer,
   user: userReducer,
   profile: profileReducer,
@@ -29,7 +35,13 @@ const reducer = combineReducers({
   newOrder: newOrderReducer,
   myOrders: myOrdersReducer,
   orderDetails: orderDetailsReducer,
-  newReview : newReviewReducer
+  newReview : newReviewReducer,
+  newProduct: newProductReducer,
+  product: productReducer,
+  allOrders : allOrdersReducer,
+  order : orderReducer,
+  allUsers : allUsersReducer,
+  userDetails : userDetailsReducer
 });
 
 // if their is data in local storage show that or then empty

@@ -88,6 +88,12 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
   if (!order) {
     return next(new ErrorHandler("Order not found with this Id", 404));
   }
+  // when item status is shepped we update the stock that time 
+  if(req.body.status === "Shipped"){
+    order.orderItems.forEach(async (o) =>{
+      await updateStock(o.product, o.quantity);
+    })
+  }
 // this is for checking order status
   if (order.orderStatus === "Delivered") {
     return next(new ErrorHandler("You have already delivered this order", 400));
