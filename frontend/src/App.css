@@ -3,6 +3,11 @@
   scroll-behavior: smooth;
 }
 
+
+body {
+  cursor: url("./images/cursor.png"),auto;
+}
+
 /* to remove the boxy click in up down arrrow in quantity part */
 
 /* Chrome, Safari, Edge, Opera */
@@ -12,9 +17,9 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 /* Firefox */
-input[type="number"] {
+/* input[type="number"] {
   -moz-appearance: textfield;
-}
+} */
 
 /* for stock in productDetails */
 .greenColor {

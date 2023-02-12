@@ -141,7 +141,7 @@ const ProductReviews = ({ history }) => {
             <h1 className="productReviewsFormHeading">ALL REVIEWS</h1>
 
             <div>
-              <Star />
+              <Star  />
               <input
                 type="text"
                 placeholder="Product Id"

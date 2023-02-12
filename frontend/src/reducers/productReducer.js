@@ -137,7 +137,6 @@ export const productDetailsReducer = (state = { product: {} }, action) => {
   }
 };
 
-
 // DELETE PRODUCT ADMIN SIDE
 export const productReducer = (state = {}, action) => {
   switch (action.type) {
@@ -145,42 +144,42 @@ export const productReducer = (state = {}, action) => {
     case UPDATE_PRODUCT_REQUEST:
       return {
         ...state,
-        loading: true,
+        loading: true
       };
     case DELETE_PRODUCT_SUCCESS:
       return {
         ...state,
         loading: false,
-        isDeleted: action.payload,
+        isDeleted: action.payload
       };
 
     case UPDATE_PRODUCT_SUCCESS:
       return {
         ...state,
         loading: false,
-        isUpdated: action.payload,
+        isUpdated: action.payload
       };
     case DELETE_PRODUCT_FAIL:
     case UPDATE_PRODUCT_FAIL:
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        error: action.payload
       };
     case DELETE_PRODUCT_RESET:
       return {
         ...state,
-        isDeleted: false,
+        isDeleted: false
       };
     case UPDATE_PRODUCT_RESET:
       return {
         ...state,
-        isUpdated: false,
+        isUpdated: false
       };
     case CLEAR_ERRORS:
       return {
         ...state,
-        error: null,
+        error: null
       };
     default:
       return state;
@@ -220,31 +219,30 @@ export const newReviewReducer = (state = {}, action) => {
   }
 };
 
-
 // admin
 export const productReviewsReducer = (state = { reviews: [] }, action) => {
   switch (action.type) {
     case ALL_REVIEW_REQUEST:
       return {
         ...state,
-        loading: true,
+        loading: true
       };
     case ALL_REVIEW_SUCCESS:
       return {
         loading: false,
-        reviews: action.payload,
+        reviews: action.payload
       };
     case ALL_REVIEW_FAIL:
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        error: action.payload
       };
 
     case CLEAR_ERRORS:
       return {
         ...state,
-        error: null,
+        error: null
       };
     default:
       return state;
@@ -256,29 +254,29 @@ export const reviewReducer = (state = {}, action) => {
     case DELETE_REVIEW_REQUEST:
       return {
         ...state,
-        loading: true,
+        loading: true
       };
     case DELETE_REVIEW_SUCCESS:
       return {
         ...state,
         loading: false,
-        isDeleted: action.payload,
+        isDeleted: action.payload
       };
     case DELETE_REVIEW_FAIL:
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        error: action.payload
       };
     case DELETE_REVIEW_RESET:
       return {
         ...state,
-        isDeleted: false,
+        isDeleted: false
       };
     case CLEAR_ERRORS:
       return {
         ...state,
-        error: null,
+        error: null
       };
     default:
       return state;

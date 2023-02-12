@@ -6,7 +6,9 @@ import {
   productReducer,
   productDetailsReducer,
   newReviewReducer,
-  newProductReducer
+  newProductReducer,
+  productReviewsReducer,
+  reviewReducer
 } from "./reducers/productReducer";
 
 import {
@@ -41,7 +43,9 @@ const reducer = combineReducers({
   allOrders : allOrdersReducer,
   order : orderReducer,
   allUsers : allUsersReducer,
-  userDetails : userDetailsReducer
+  userDetails : userDetailsReducer,
+  productReviews : productReviewsReducer,
+  review : reviewReducer
 });
 
 // if their is data in local storage show that or then empty
